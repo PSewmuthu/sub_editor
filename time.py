@@ -6,6 +6,7 @@ class WholeSub:
         self.s = 0
         self.m = 0
         self.h = 0
+        self.error = 0
         
         self.diff_h = h
         self.diff_m = m
@@ -35,8 +36,25 @@ class WholeSub:
                 self.cur_to_ms = int(t_t[2].split(',')[1])
                 
                 if self.method == 'add':
-                    self.frm_reals = self.add()[0]
-                    self.to_reals = self.add()[1]
+                    reals = self.add()
+                    
+                    self.frm_reals = reals[0]
+                    self.to_reals = reals[1]
+                elif self.method == 'substract':
+                    reals = self.substract()
+                    
+                    if self.error != 0:
+                        break
+                    
+                    self.frm_reals = reals[0]
+                    self.to_reals = reals[1]
+                else:
+                    print('Method is not correct!')
+                    break
+                
+                self.out_file.write(f"{self.frm_reals[0]}:{self.frm_reals[1]}:{self.frm_reals[2]},{self.frm_reals[3]} --> {self.to_reals[0]}:{self.to_reals[1]}:{self.to_reals[2]},{self.to_reals[3]}\r\n")
+            else:
+                self.out_file.write(f"{line}\r\n")
     
     def add(self):
         rea_frm_h = self.cur_frm_h + self.diff_h
@@ -82,3 +100,102 @@ class WholeSub:
         reals = [[rea_frm_h, rea_frm_m, rea_frm_s, rea_frm_ms], [rea_to_h, rea_to_m, rea_to_s, rea_to_ms]]
         
         return reals
+    
+    def substract(self):
+        if self.cur_frm_ms < self.diff_ms:
+            if (self.cur_frm_s == 0) and (self.cur_frm_m == 0) and (self.cur_frm_h == 0):
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            elif (self.cur_frm_s == 0) and (self.cur_frm_m == 0):
+                self.cur_frm_h -= 1
+                self.cur_frm_m += 59
+                self.cur_frm_s += 59
+                self.cur_frm_ms += 1000
+            elif self.cur_frm_s == 0:
+                self.cur_frm_m -= 1
+                self.cur_frm_s += 59
+                self.cur_frm_ms += 1000
+            else:
+                self.cur_frm_s -= 1
+                self.cur_frm_ms += 1000
+        rea_frm_ms = self.cur_frm_ms - self.diff_ms
+        
+        if self.cur_frm_s < self.diff_s:
+            if (self.cur_frm_m == 0) and (self.cur_frm_h == 0):
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            elif self.cur_frm_m == 0:
+                self.cur_frm_h -= 1
+                self.cur_frm_m += 59
+                self.cur_frm_s += 60
+            else:
+                self.cur_frm_m -= 1
+                self.cur_frm_s += 60
+        rea_frm_s = self.cur_frm_s - self.diff_s
+        
+        if self.cur_frm_m < self.diff_m:
+            if self.cur_frm_h == 0:
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            else:
+                self.cur_frm_h -= 1
+                self.cur_frm_m += 60
+        rea_frm_m = self.cur_frm_m - self.diff_m
+        
+        if self.cur_frm_h < self.diff_h:
+            print('Cannot substract the amount of time given by you!')
+            self.error = 1
+        rea_frm_h = self.cur_frm_h - self.diff_h
+        
+        if self.cur_to_ms < self.diff_ms:
+            if (self.cur_to_s == 0) and (self.cur_to_m == 0) and (self.cur_to_h == 0):
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            elif (self.cur_to_s == 0) and (self.cur_to_m == 0):
+                self.cur_to_h -= 1
+                self.cur_to_m += 59
+                self.cur_to_s += 59
+                self.cur_to_ms += 1000
+            elif self.cur_to_s == 0:
+                self.cur_to_m -= 1
+                self.cur_to_s += 59
+                self.cur_to_ms += 1000
+            else:
+                self.cur_to_s -= 1
+                self.cur_to_ms += 1000
+        rea_to_ms = self.cur_to_ms - self.diff_ms
+        
+        if self.cur_to_s < self.diff_s:
+            if (self.cur_to_m == 0) and (self.cur_to_h == 0):
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            elif self.cur_to_m == 0:
+                self.cur_to_h -= 1
+                self.cur_to_m += 59
+                self.cur_to_s += 60
+            else:
+                self.cur_to_m -= 1
+                self.cur_to_s += 60
+        rea_to_s = self.cur_to_s - self.diff_s
+        
+        if self.cur_to_m < self.diff_m:
+            if self.cur_to_h == 0:
+                print('Cannot substract the amount of time given by you!')
+                self.error = 1
+            else:
+                self.cur_to_h -= 1
+                self.cur_to_m += 60
+        rea_to_m = self.cur_to_m - self.diff_m
+        
+        if self.cur_to_h < self.diff_h:
+            print('Cannot substract the amount of time given by you!')
+            self.error = 1
+        rea_to_h = self.cur_to_h - self.diff_h
+        
+        reals = [[rea_frm_h, rea_frm_m, rea_frm_s, rea_frm_ms], [rea_to_h, rea_to_m, rea_to_s, rea_to_ms]]
+        
+        return reals
+    
+    def __del__(self):
+        self.in_file.close()
+        self.out_file.close()
