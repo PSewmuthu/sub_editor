@@ -2,17 +2,17 @@
 
 > To easily change your subtitle files.
 
-        With this python script, you can easily correct the changed timeline in your subtitle file. Unicodes are well supported.
+With this python script, you can easily correct the changed timeline in your subtitle file. Unicodes are well supported.
 
 ## Usage Example
 
-    You can easily change the subtitle timeline as following.
+You can easily change the subtitle timeline as following.
 
 `python sub_editor`
 
-    After running the above code in your terminal, answer to all of questions given by the programme.
+After running the above code in your terminal, answer to all of questions given by the programme.
 
-        Then, a new subtitle file will generate automatically with correct timeline.
+Then, a new subtitle file will generate automatically with correct timeline.
 
 ## Release History
 
