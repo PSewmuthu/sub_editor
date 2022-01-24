@@ -13,8 +13,8 @@ class WholeSub:
         self.diff_s = s
         self.diff_ms = ms
         self.method = method
-        self.in_file = codecs.open(str(in_file), 'r', 'UTF-8')
-        self.out_file = codecs.open(str(out_file), 'w', 'UTF-8')
+        self.in_file = codecs.open(in_file, 'r', 'UTF-8')
+        self.out_file = codecs.open(out_file, 'w', 'UTF-8')
     
     def process(self):
         for line in self.in_file.readlines():
@@ -199,3 +199,21 @@ class WholeSub:
     def __del__(self):
         self.in_file.close()
         self.out_file.close()
+
+if __name__ == '__main__':
+    method = input('Enter the subtitle time change method: (a for add or s for substract) ')
+    time = input('Enter the time you want to add or substract: (as hh:mm:ss,ms) ')
+    in_file = input('Enter the subtitle file name and location to change the time line: (ex: /folder/sub.srt) ')
+    out_file = input('Enter the changed subtitle file name and location to save: (ex: /folder/out.srt) ')
+    
+    if method in ('a', 'ad', 'add'):
+        method = 'add'
+    elif method in ('s', 'su', 'sub', 'subs', 'subst', 'substr', 'substra', 'substrac', 'substract'):
+        method = 'substract'
+    else:
+        print('Method is not correct!')
+    
+    time = time.split(':')
+    sec = time[2].split(',')
+    
+    WholeSub(time[0], time[1], sec[0], sec[1], in_file, out_file)
