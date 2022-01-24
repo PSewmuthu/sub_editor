@@ -8,7 +8,7 @@ With this python script, you can easily correct the changed timeline in your sub
 
 You can easily change the subtitle timeline as following.
 
-    `python sub_editor`
+    python sub_editor
 
 After running the above code in your terminal, answer to all of questions given by the programme.
 
