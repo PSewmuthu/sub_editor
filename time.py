@@ -15,6 +15,8 @@ class WholeSub:
         self.method = method
         self.in_file = codecs.open(in_file, 'r', 'UTF-8')
         self.out_file = codecs.open(out_file, 'w', 'UTF-8')
+        
+        self.process()
     
     def process(self):
         for line in self.in_file.readlines():
