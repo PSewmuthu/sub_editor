@@ -216,4 +216,4 @@ if __name__ == '__main__':
     time = time.split(':')
     sec = time[2].split(',')
     
-    WholeSub(time[0], time[1], sec[0], sec[1], in_file, out_file)
+    WholeSub(time[0], time[1], sec[0], sec[1], in_file, out_file, method)
