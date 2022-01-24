@@ -54,7 +54,51 @@ class WholeSub:
                     print('Method is not correct!')
                     break
                 
-                self.out_file.write(f"{self.frm_reals[0]}:{self.frm_reals[1]}:{self.frm_reals[2]},{self.frm_reals[3]} --> {self.to_reals[0]}:{self.to_reals[1]}:{self.to_reals[2]},{self.to_reals[3]}\r\n")
+                if len(str(self.frm_reals[0])) == 1:
+                    frm_h = '0' + str(self.frm_reals[0])
+                else:
+                    frm_h = str(self.frm_reals[0])
+                
+                if len(str(self.frm_reals[1])) == 1:
+                    frm_m = '0' + str(self.frm_reals[1])
+                else:
+                    frm_m = str(self.frm_reals[1])
+                
+                if len(str(self.frm_reals[2])) == 1:
+                    frm_s = '0' + str(self.frm_reals[2])
+                else:
+                    frm_s = str(self.frm_reals[2])
+                
+                if len(str(self.frm_reals[3])) == 1:
+                    frm_ms = '00' + str(self.frm_reals[3])
+                elif len(str(self.frm_reals[3])) == 2:
+                    frm_ms = '0' + str(self.frm_reals[3])
+                else:
+                    frm_ms = str(self.frm_reals[3])
+                
+                if len(str(self.to_reals[0])) == 1:
+                    to_h = '0' + str(self.to_reals[0])
+                else:
+                    to_h = str(self.to_reals[0])
+                
+                if len(str(self.to_reals[1])) == 1:
+                    to_m = '0' + str(self.to_reals[1])
+                else:
+                    to_m = str(self.to_reals[1])
+                
+                if len(str(self.to_reals[2])) == 1:
+                    to_s = '0' + str(self.to_reals[2])
+                else:
+                    to_s = str(self.to_reals[2])
+                
+                if len(str(self.to_reals[3])) == 1:
+                    to_ms = '00' + str(self.to_reals[3])
+                elif len(str(self.to_reals[3])) == 2:
+                    to_ms = '0' + str(self.to_reals[3])
+                else:
+                    to_ms = str(self.to_reals[3])
+                
+                self.out_file.write(f"{frm_h}:{frm_m}:{frm_s},{frm_ms} --> {to_h}:{to_m}:{to_s},{to_ms}\r\n")
             else:
                 self.out_file.write(f"{line}\r\n")
     
@@ -218,4 +262,4 @@ if __name__ == '__main__':
     time = time.split(':')
     sec = time[2].split(',')
     
-    WholeSub(time[0], time[1], sec[0], sec[1], in_file, out_file, method)
+    WholeSub(int(time[0]), int(time[1]), int(sec[0]), int(sec[1]), in_file, out_file, method)
